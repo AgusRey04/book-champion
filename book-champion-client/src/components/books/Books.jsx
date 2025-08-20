@@ -1,15 +1,36 @@
 import BookItem from "../bookItem/BookItem";
 import BookSearch from "../boockSearch/BookSearch";
+import ConfirmDeleteModal from "../ui/ConfirmDeleteModal";
 import { useState } from "react";
-const Books = ({ books }) => {
+
+const Books = ({ books, onDeleteBook }) => {
   const [selectedTitle, setSelectedTitle] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  const filteredBooks = books.filter((book) => {
-    return book.bookTitle.toLowerCase().includes(searchValue.toLowerCase());
-  });
+  const [showModal, setShowModal] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState(null);
+
+  const filteredBooks = books.filter((book) =>
+    book.bookTitle.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   const handleSelect = (title) => {
     setSelectedTitle(title);
+  };
+
+  const handleDeleteClick = (book) => {
+    setBookToDelete(book);
+    setShowModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    onDeleteBook(bookToDelete.id);
+    setShowModal(false);
+    setBookToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setShowModal(false);
+    setBookToDelete(null);
   };
 
   return (
@@ -33,9 +54,16 @@ const Books = ({ books }) => {
             imageUrl={book.imageUrl}
             available={book.available}
             onSelect={handleSelect}
+            onDelete={() => handleDeleteClick(book)}
           />
         ))}
       </div>
+      <ConfirmDeleteModal
+        show={showModal}
+        onHide={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        bookTitle={bookToDelete?.bookTitle}
+      />
     </>
   );
 };

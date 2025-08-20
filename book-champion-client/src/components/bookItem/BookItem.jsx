@@ -11,6 +11,7 @@ const BookItem = ({
   imageUrl,
   available,
   onSelect,
+  onDelete,
 }) => {
   const formattedRating = Array.from({ length: 5 }, (_, i) =>
     i < rating ? <StarFill key={`star-${i}`} /> : <Star key={`star-${i}`} />
@@ -30,12 +31,13 @@ const BookItem = ({
         <Card.Title>{title}</Card.Title>
         <Card.Subtitle>{author}</Card.Subtitle>
         <Card.Text>{formattedRating} Estrellas</Card.Text>
-        <Card.Text>{formattedRating} Estrellas</Card.Text>
         <Card.Text>{pageCount} Páginas</Card.Text>
         <Button onClick={() => onSelect(title)}>Seleccionar libro</Button>
+        <Button variant="danger" onClick={onDelete}>
+          Eliminar
+        </Button>
       </Card.Body>
     </Card>
   );
 };
-
 export default BookItem;

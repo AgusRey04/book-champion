@@ -3,6 +3,7 @@ import Books from "./components/books/Books";
 import NewBook from "./components/newBook/NewBook";
 import { useState } from "react";
 import BookSearch from "./components/boockSearch/BookSearch";
+import Login from "./components/auth/login/Login";
 const initialBooks = [
   {
     id: 1,
@@ -64,15 +65,17 @@ function App() {
     };
     setBooks((prev) => [...prev, NewBook]);
   };
-
+  const handleDeleteBook = (id) => {
+    setBooks((prev) => prev.filter((book) => book.id !== id));
+  };
   return (
     <>
       <div className=" d-flex flex-column align-items-center">
+        <Login />
         <h1>Book champions app</h1>
         <p>Quiero leer libros!</p>
-        <BookSearch books={books} />
         <NewBook onBookAdded={handleBookAdded} />
-        <Books books={books} />
+        <Books books={books} onDeleteBook={handleDeleteBook} />
       </div>
     </>
   );
