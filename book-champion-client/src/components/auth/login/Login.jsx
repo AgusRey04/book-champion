@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
-
-const Login = () => {
+import { useNavigate } from "react-router";
+const Login = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,13 +23,13 @@ const Login = () => {
     event.preventDefault();
     if (!emailRef.current.value.length) {
       setErrors((prev) => ({ ...prev, email: true }));
-      alert("Por favor, complete todos los campos.");
+      alert("Por favor, complete el email");
       emailRef.current.focus();
       return;
     }
     if (!password.length || password.length < 6) {
       setErrors((prev) => ({ ...prev, password: true }));
-      alert("Por favor, complete todos los campos.");
+      alert("Por favor, complete la contraseña.");
       passwordRef.current.focus();
       return;
     }
@@ -37,6 +38,8 @@ const Login = () => {
 
     setEmail("");
     setPassword("");
+    onLogin();
+    navigate("/library");
   };
 
   return (
@@ -67,7 +70,6 @@ const Login = () => {
             />
           </FormGroup>
           <Row>
-            <Col />
             <Col md={6} className="d-flex justify-content-end">
               <Button variant="secondary" type="submit">
                 Iniciar sesión
