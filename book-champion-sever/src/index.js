@@ -1,12 +1,17 @@
-import express from "express";
-import { PORT } from "./config.js";
+import express from 'express'
+import bookRoutes from './routes/books.router.js'
+import { PORT } from './config.js';
+import { sequelize } from "./db.js";
 
-import bookRoutes from "../routes/books.router.js"
 const app = express();
 
-app.listen(PORT);
-app.use(bookRoutes);
+try {
+    app.listen(PORT);
+    app.use(bookRoutes);
 
-console.log(`Server is running on port ${PORT}`);
+    await sequelize.sync();
 
-
+    console.log(`Server listening on port ${PORT}`);
+} catch (error) {
+    console.log(`Ocurrio un error en la inicialización: ${error.message}`)
+}
