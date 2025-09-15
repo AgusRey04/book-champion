@@ -11,6 +11,7 @@ const NewBook = ({ onBookAdded }) => {
   const [pageCount, setPageCount] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [available, setAvailable] = useState(false);
+  const [summary, setSummary] = useState(""); // Agrega el estado para summary
 
   const handleChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -30,14 +31,18 @@ const NewBook = ({ onBookAdded }) => {
   const handleChangeAvailable = (event) => {
     setAvailable(event.target.checked);
   };
+  const handleChangeSummary = (event) => {
+    setSummary(event.target.value);
+  };
 
   const handleAddBook = (event) => {
     event.preventDefault();
     const newBook = {
-      bookTitle: title,
-      bookAuthor: author,
-      bookRating: parseInt(rating, 10),
-      pageCount: parseInt(pageCount, 10),
+      title,
+      author,
+      rating: Number(rating),
+      pageCount: Number(pageCount),
+      summary,
       imageUrl,
       available,
     };
@@ -46,6 +51,7 @@ const NewBook = ({ onBookAdded }) => {
     setAuthor("");
     setRating("");
     setPageCount("");
+    setSummary(""); // Limpia el campo summary
     setImageUrl("");
     setAvailable(false);
     navigate("/library", { replace: true });
@@ -114,6 +120,17 @@ const NewBook = ({ onBookAdded }) => {
                 placeholder="Ingresar url de imagen"
                 value={imageUrl}
                 onChange={handleChangeImageUrl}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="justify-content-between">
+            <Form.Group className="mb-3" controlId="summary">
+              <Form.Label>Sinopsis</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Ingresar sinopsis"
+                value={summary}
+                onChange={handleChangeSummary}
               />
             </Form.Group>
           </Row>

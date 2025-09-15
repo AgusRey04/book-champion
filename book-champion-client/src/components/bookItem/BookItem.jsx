@@ -19,7 +19,7 @@ const BookItem = ({
 
   return (
     <Card style={{ width: "18rem" }} className="mx-3">
-      <Card.Img variant="top" src={imageUrl} />
+      <Card.Img variant="top" src={imageUrl || "https://bit.ly/47NylZk"} />
       <Card.Body>
         <div className="mb-2">
           {available ? (

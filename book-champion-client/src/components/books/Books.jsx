@@ -10,7 +10,7 @@ const Books = ({ books, onDeleteBook }) => {
   const [bookToDelete, setBookToDelete] = useState(null);
 
   const filteredBooks = books.filter((book) =>
-    book.bookTitle.toLowerCase().includes(searchValue.toLowerCase())
+    book.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const handleSelect = (title) => {
@@ -47,9 +47,9 @@ const Books = ({ books, onDeleteBook }) => {
         {filteredBooks.map((book) => (
           <BookItem
             key={book.id}
-            title={book.bookTitle}
-            author={book.bookAuthor}
-            rating={book.bookRating.length}
+            title={book.title}
+            author={book.author}
+            rating={book.rating}
             pageCount={book.pageCount}
             imageUrl={book.imageUrl}
             available={book.available}
