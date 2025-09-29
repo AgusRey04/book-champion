@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { registerUser, loginUser } from "../services/user.services.js";
-
 const userRoutes = Router();
 
 // Registro de usuario

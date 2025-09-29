@@ -63,19 +63,30 @@ function Dashboard({ onLogout }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/books")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setBooks(data);
+    if (location.pathname === "/library")
+      fetch("http://localhost:3000/books", {
+        headers: {
+          Authorization: ` Bearer ${localStorage.getItem(
+            "book-champions-token"
+          )}`,
+        },
       })
-      .catch((error) => console.error("Error fetching books:", error));
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setBooks(data);
+        })
+        .catch((error) => console.error("Error fetching books:", error));
   }, []);
 
   const handleBookAdded = (newBook) => {
     fetch("http://localhost:3000/books", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+
       body: JSON.stringify(newBook),
     })
       .then((response) => response.json())
