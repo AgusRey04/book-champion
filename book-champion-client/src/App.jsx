@@ -5,8 +5,17 @@ import { useState } from "react";
 import Dashboard from "./components/dashboard/Dashboard";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import NotFound from "./components/notFound/NotFound";
+import { useEffect } from "react";
+import Register from "./components/auth/register/Register";
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState({});
+  useEffect(() => {
+    fetch("http://localhost:3000/login")
+      .then((response) => response.json())
+      .then((data) => {
+        setLoggedIn(data.loggedIn);
+      });
+  }, []);
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -20,6 +29,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
           <Route element={<ProtectedRoute isLoggedIn={loggedIn} />}>
             <Route
